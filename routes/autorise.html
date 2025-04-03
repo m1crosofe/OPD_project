@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Авторизация - Surgu Gym</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <div class="menu">
+        <div class="container flex">
+            <div class="mobile-btn">
+                <ion-icon name="grid"></ion-icon>
+            </div>
+            <div class="logo">
+                <img src="https://raw.githubusercontent.com/programmercloud/pgc-gym/main/img/logo.png" alt="" />
+            </div>
+            <ul class="nav">
+                <li class="nav-item"><a href="#">Главная</a></li>
+                <li class="nav-item"><a href="#why-us">Особенности</a></li>
+                <li class="nav-item"><a href="#explore">О нас</a></li>
+                <li class="nav-item"><a href="#discount">Регистрация</a></li>
+            </ul>
+            <a href="#" class="btn">Регистрация</a>
+        </div>
+    </div>
+    <!-- End Menu -->
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container flex">
+            <div class="text">
+                <h1 class="mb">Авторизация в <br /><span>Surgu Gym</span></h1>
+                <p class="mb">Введите свои данные, чтобы получить доступ к своему аккаунту.</p>
+            </div>
+            <div class="visual">
+                <img src="https://raw.githubusercontent.com/programmercloud/pgc-gym/main/img/banner-img.png" alt="" />
+            </div>
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Authorization Form -->
+    <div class="section" id="login">
+        <div class="container flex">
+            <div class="form-container">
+                <h2 class="primary mb">Войти в аккаунт</h2>
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="email">Электронная почта</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <input type="password" id="password" name="password" required />
+                    </div>
+                    <button type="submit" class="btn mt">Войти</button>
+                </form>
+                <p class="tertiary mt">Нет аккаунта? <a href="#discount">Зарегистрируйтесь здесь</a>.</p>
+            </div>
+        </div>
+    </div>
+    <!-- End Authorization Form -->
+
+    <footer class="footer">
+        <div class="container flex">
+            <p class="tertiary">&copy; 2025 проект СурГУ</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

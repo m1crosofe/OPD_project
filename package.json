@@ -1,0 +1,23 @@
+{
+  "name": "opd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m1crosofe/OPD_project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m1crosofe/OPD_project/issues"
+  },
+  "homepage": "https://github.com/m1crosofe/OPD_project#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "type": "module"
+}
