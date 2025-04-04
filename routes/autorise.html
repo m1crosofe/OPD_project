@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,8 +8,9 @@
     <title>Авторизация - Surgu Gym</title>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-
+    <link rel = "shortcut icon" href = "/static/logo.png" type = "image/png">
 </head>
+
 <body>
 
     <div class="menu">
@@ -69,142 +71,167 @@
         </div>
     </footer>
 
-<style>
-    * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-a {
-    text-decoration: none;
-    color: black;
-}
-a:hover {
-    color: #007bff;
-}
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f8f9fa;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
-}
+        a {
+            text-decoration: none;
+            color: black;
+        }
 
-.flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        a:hover {
+            color: #007bff;
+        }
 
-.menu {
-    background-color: #343a40;
-    padding: 15px 0;
-}
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
 
-.menu .logo img {
-    width: 150px;
-}
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
 
-.menu .nav {
-    list-style: none;
-    display: flex;
-}
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.menu .nav-item {
-    margin: 0 15px;
-}
+        .menu {
+            width: 100%;
+            background: linear-gradient(to right, #0e0e0e 70%, #142d2a);
+            padding: 12px 0;
 
-.menu .nav-item a {
-    color: #ffffff;
-    text-decoration: none;
-}
+        }
 
-.btn {
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-}
+        .menu .container {
+            justify-content: space-between;
+        }
 
-.header {
-    background-color: #e9ecef;
-    padding: 50px 0;
-    text-align: center;
-}
 
-.header .text h1 {
-    font-size: 2.5em;
-    margin-bottom: 15px;
-}
+        .logo img {
+            width: 150px;
+        }
 
-.header .text span {
-    color: #007bff;
-}
+        .nav {
+            list-style: none;
+        }
 
-.section {
-    padding: 40px 0;
-}
+        .nav-item {
+            display: inline-block;
+            margin-right: 30px;
+            font-size: 18px;
+            font-weight: 400;
+        }
 
-.primary {
-    color: #007bff;
-    font-size: 1.5em;
-    margin-bottom: 20px;
-}
+        .nav-item a {
+            text-decoration: none;
+            color: #fff;
+        }
 
-.form-container {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-}
+        .nav-item:hover a {
+            color: #29a396;
+            transition: 0.3s linear;
+        }
 
-.form-group {
-    margin-bottom: 15px;
-}
+        .nav-item:last-of-type {
+            margin-right: 0;
+        }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
+        .menu .container {
+            justify-content: space-between;
+        }
 
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-}
+        .btn {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
 
-.btn.mt {
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-}
+        .header {
+            background-color: #e9ecef;
+            padding: 50px 0;
+            text-align: center;
+        }
 
-.tertiary {
-    color: #6c757d;
-}
+        .header .text h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
 
-.footer {
-    background-color: #343a40;
-    color: #ffffff;
-    text-align: center;
-    padding: 15px 0;
-}
+        .header .text span {
+            color: #007bff;
+        }
 
-</style>
+        .section {
+            padding: 40px 0;
+        }
+
+        .primary {
+            color: #007bff;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
+        .btn.mt {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .tertiary {
+            color: #6c757d;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px 0;
+        }
+    </style>
 </body>
+
 </html>

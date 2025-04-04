@@ -8,7 +8,7 @@ const options = {
     root: "routes"
 }
 
-app.use(exporess.static('routes'))
+app.use(exporess.static('public'))
 
 app.get('/', (req, res) => {
     res.sendFile('main.html', options)
