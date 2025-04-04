@@ -19,14 +19,12 @@
             <div class="logo">
                 <img src="https://raw.githubusercontent.com/programmercloud/pgc-gym/main/img/logo.png" alt="" />
             </div>
-
             <ul class="nav">
                 <li class="nav-item"><a href="/">Главная</a></li>
                 <li class="nav-item"><a href="/#why-us">Особенности</a></li>
                 <li class="nav-item"><a href="/#explore">О нас</a></li>
             </ul>
-
-            <a href="/registration" class="btn">Регистрация</a>
+            <a href="#" class="btn">Регистрация</a>
         </div>
     </div>
 
@@ -36,31 +34,31 @@
                 <h1 class="mb">Авторизация в <br /><span>Surgu Gym</span></h1>
                 <p class="mb">Введите свои данные, чтобы получить доступ к своему аккаунту.</p>
             </div>
-            <div class="visual">
-                <img src="https://raw.githubusercontent.com/programmercloud/pgc-gym/main/img/banner-img.png" alt="" />
-            </div>
         </div>
     </header>
 
     <div class="section" id="login">
-        <div class="container flex">
-            <div class="form-container">
-                <h2 class="primary mb">Войти в аккаунт</h2>
-                <form action="#" method="post">
-                    <div class="form-group">
-                        <label for="email">Электронная почта</label>
-                        <input type="email" id="email" name="email" required />
+    <div class="container flex">
+        <div class="form-container">
+            <h2 class="primary mb">Регистрация</h2>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="email">Электронная почта</label>
+                    <input type="email" id="email" name="email" required />
                     </div>
                     <div class="form-group">
                         <label for="password">Пароль</label>
-                        <input type="password" id="password" name="password" required />
+                        <div class="password-container">
+                            <input type="password" id="password" name="password" required />
+                            <button type="button" class="password-toggle" id="password-toggle">&#x1F441;</button>
+                        </div>
                     </div>
                     <button type="submit" class="btn mt">Войти</button>
                 </form>
-                <p class="tertiary mt">Нет аккаунта? <a href="/registration">Зарегистрируйтесь здесь</a>.</p>
             </div>
         </div>
     </div>
+
 
 
     <footer class="footer">
@@ -68,24 +66,35 @@
             <p class="tertiary">&copy; 2025 проект СурГУ</p>
         </div>
     </footer>
+</body>
+<script>
+document.getElementById('password-toggle').addEventListener('click', function() {
+    var passwordInput = document.getElementById('password');
+    var icon = document.getElementById('password-toggle');
 
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.innerHTML = '&#x1F440;'; // Eye icon open
+    } else {
+        passwordInput.type = 'password';
+        icon.innerHTML = '&#x1F441;'; // Eye icon closed
+    }
+});
+
+</script>
 <style>
     * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-a {
-    text-decoration: none;
-    color: black;
-}
-a:hover {
-    color: #007bff;
-}
+
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: #f8f9fa;
+    width: 100%;
+    min-height: 100%;
 }
 
 .container {
@@ -96,7 +105,7 @@ body {
 
 .flex {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -170,7 +179,29 @@ body {
 .form-group {
     margin-bottom: 15px;
 }
+.password-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
 
+.password-container input {
+    flex-grow: 1; 
+    padding: 10px 50px 10px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+.password-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin-left: -30px; 
+    font-size: 1.2em; 
+    display: flex; 
+    align-items: center; 
+}
 .form-group label {
     display: block;
     margin-bottom: 5px;

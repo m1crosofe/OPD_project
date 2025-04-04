@@ -18,6 +18,10 @@ app.get('/autorise', (req, res) => {
     res.sendFile('autorise.html', options)
 })
 
+app.get('/registration', (req, res) => {
+    res.sendFile('registration.html', options)
+})
+
 app.listen(port, () => {
     console.log(`Сервер запущен, http://localhost:${port}`);
 })
