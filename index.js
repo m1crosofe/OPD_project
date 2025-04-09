@@ -1,14 +1,14 @@
-import exporess from 'express';
+import express from 'express';
 
 
 
-const app = exporess();
+const app = express();
 const port = 3000;
 const options = {
     root: "routes"
 }
 
-app.use(exporess.static('public'))
+app.use(express.static('public'))
 
 app.get('/', (req, res) => {
     res.sendFile('main.html', options)
@@ -22,6 +22,9 @@ app.get('/registration', (req, res) => {
     res.sendFile('registration.html', options)
 })
 
+app.get('/service', (req, res) => {
+    res.sendFile('service.html', options)
+})
 app.listen(port, () => {
     console.log(`Сервер запущен, http://localhost:${port}`);
 })
