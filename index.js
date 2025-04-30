@@ -1,19 +1,19 @@
 import express from 'express';
-
-
-
+import session from 'express-session';
 const app = express();
 const port = 3000;
 const options = {
     root: "routes"
 }
+app.set('view engine', 'ejs');
+app.set('views', options.root);
 app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: 'yourSecretKey', resave: false, saveUninitialized: true }));
 const users = [
-    {id: 1, login: 'admin@ex.ru', password: 'admin', date: '01.01.2025'},
-    {id: 2, login: 'user@ex.ru', password: 'user', date: '02.02.2025'}
+    { id: 1, login: 'admin@ex.ru', password: 'admin', date: '01.01.2025' },
+    { id: 2, login: 'user@ex.ru', password: 'user', date: '02.02.2025' }
 ]
 app.use(express.static('public'))
-
 app.get('/', (req, res) => {
     res.sendFile('main.html', options)
 })
@@ -25,33 +25,57 @@ app.get('/autorise', (req, res) => {
 app.get('/registration', (req, res) => {
     res.sendFile('registration.html', options)
 })
-
 app.post('/registration', (req, res) => {
     try {
 
         const { email, password } = req.body;
+        const existingUser = users.find(user => user.login === email);
+        if (existingUser) {
+            req.session.user = existingUser;
+            return res.redirect('/profile');
+        } else {
         const id = users.length + 1;
         var today = new Date();
         var day = today.getDate().toString()
-        var month = today.getMonth()+1
+        var month = today.getMonth() + 1
         var year = today.getFullYear().toString()
-        var date = day+'.'+month+'.'+year
-        users.push({ id: id, login: email, password: password, date: date })
+        var date = day + '.' + month + '.' + year
+        const newUser = { id, login: email, password, date };
+
+        users.push(newUser);
+        req.session.user = newUser;
         return res.redirect('/profile')
-        
+        }
+
     }
     catch (e) {
         return res.statusCode(400)
     }
-    
-  
+
+});
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    const user = users.find(u => u.login === email && u.password === password); 
+
+    if (user) {
+        req.session.user = user;
+        return res.redirect('/profile'); 
+    } else {
+        return res.status(401).send('Неверный email или пароль'); 
+    }
 });
 
 app.get('/service', (req, res) => {
     res.sendFile('service.html', options)
 })
 app.get('/profile', (req, res) => {
-    res.sendFile('profile.html', options)
+    if (!req.session.user) {
+        return res.redirect('/registration');
+    }
+    const user = req.session.user;
+    res.render('profile', { user });
     console.log(users);
 })
 app.listen(port, () => {

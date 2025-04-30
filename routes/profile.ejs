@@ -198,8 +198,8 @@
                 <div class="user-info">
                     <img src="https://placehold.co/200x200" alt="Profile Picture" />
                     <p><strong>Имя:</strong> John Doe</p>
-                    <p><strong>Email:</strong> john.doe@example.com</p>
-                    <p><strong>Дата регистрации:</strong> July 15, 2024</p>
+                    <p><strong>Email:</strong> <%= user.login %></p>
+                    <p><strong>Дата регистрации:</strong> <%= user.date %></p>
                     <p><strong>Статус членства:</strong> Active</p>
                 </div>
                 <button type="button" class="btn mt" onclick="alert('Функция редактирования не реализована')">Редактировать профиль</button>
@@ -212,5 +212,6 @@
             <p class="tertiary">&copy; 2025 проект СурГУ</p>
         </div>
     </footer>
+
 </body>
 </html>
