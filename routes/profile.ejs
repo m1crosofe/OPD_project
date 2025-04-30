@@ -166,6 +166,17 @@
             padding: 15px 0;
         }
     </style>
+    <script>
+        function toggleEdit() {
+            const editForm = document.getElementById('edit-profile-form');
+            const displayInfo = document.getElementById('display-info');
+            const editButton = document.getElementById('edit-button');
+            const isEditing = editForm.style.display === 'block';
+            editForm.style.display = isEditing ? 'none' : 'block';
+            displayInfo.style.display = isEditing ? 'block' : 'none';
+            editButton.textContent = isEditing ? 'Редактировать профиль' : 'Отменить редактирование';
+        }
+    </script>
 </head>
 <body>
     <div class="menu">
@@ -195,14 +206,26 @@
         <div class="container flex">
             <div class="form-container">
                 <h2 class="primary mb">Информация о профиле</h2>
-                <div class="user-info">
-                    <img src="https://placehold.co/200x200" alt="Profile Picture" />
-                    <p><strong>Имя:</strong> John Doe</p>
-                    <p><strong>Email:</strong> <%= user.login %></p>
-                    <p><strong>Дата регистрации:</strong> <%= user.date %></p>
-                    <p><strong>Статус членства:</strong> Active</p>
+                 <div id="display-info">
+                    <div class="user-info">
+                        <img src="<%= user.photo || 'https://placehold.co/200x200' %>" alt="Profile Picture" />
+                        <p><strong>Имя:</strong> <span id="display-name"><%= user.name || 'Введите ваше имя' %></span></p>
+                        <p><strong>Email:</strong> <span id="display-email"><%= user.login %></span></p>
+                        <p><strong>Дата регистрации:</strong> <%= user.date %></p>
+                        <p><strong>Статус членства:</strong> Active</p>
+                    </div>
+                    <button type="button" id="edit-button" class="btn mt" onclick="toggleEdit()">Редактировать профиль</button>
                 </div>
-                <button type="button" class="btn mt" onclick="alert('Функция редактирования не реализована')">Редактировать профиль</button>
+
+                <form id="edit-profile-form" action="/update-profile" method="POST" enctype="multipart/form-data" style="display: none;">
+                    <div class="user-info">
+                        <img src="<%= user.photo || 'https://placehold.co/200x200' %>" alt="Profile Picture" />
+                        <p><strong>Имя:</strong> <input type="text" name="name" value="<%= user.name || '' %>" required /></p>
+                        <p><strong>Email:</strong> <input type="email" name="email" value="<%= user.login %>" required /></p>
+                        <p><strong>Фото профиля:</strong> <input type="file" name="photo" accept="image/*" /></p>
+                    </div>
+                    <button type="submit" class="btn mt">Сохранить изменения</button>
+                </form>
             </div>
         </div>
     </div>

@@ -1,18 +1,36 @@
 import express from 'express';
 import session from 'express-session';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 const app = express();
 const port = 3000;
 const options = {
     root: "routes"
 }
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads/'); 
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+let users = [];
+try {
+    const data = fs.readFileSync('users.json', 'utf8');
+    users = JSON.parse(data);
+} catch (err) {
+    users = [
+        { id: 1, login: 'admin@ex.ru', password: 'admin', date: '01.01.2025' },
+        { id: 2, login: 'user@ex.ru', password: 'user', date: '02.02.2025' }
+    ];
+}
+const upload = multer({ storage });
 app.set('view engine', 'ejs');
 app.set('views', options.root);
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: 'yourSecretKey', resave: false, saveUninitialized: true }));
-const users = [
-    { id: 1, login: 'admin@ex.ru', password: 'admin', date: '01.01.2025' },
-    { id: 2, login: 'user@ex.ru', password: 'user', date: '02.02.2025' }
-]
 app.use(express.static('public'))
 app.get('/', (req, res) => {
     res.sendFile('main.html', options)
@@ -46,7 +64,6 @@ app.post('/registration', (req, res) => {
         req.session.user = newUser;
         return res.redirect('/profile')
         }
-
     }
     catch (e) {
         return res.statusCode(400)
@@ -78,6 +95,27 @@ app.get('/profile', (req, res) => {
     res.render('profile', { user });
     console.log(users);
 })
+app.post('/update-profile', upload.single('photo'), (req, res) =>{
+    const { email, name } = req.body; 
+    const user = req.session.user; 
+
+    if (user) {
+        user.login = email; 
+        user.name = name;
+        if (req.file) {
+            user.photo = '/uploads/' + req.file.filename;
+        }
+        const index = users.findIndex(u => u.id === user.id);
+        if (index !== -1) {
+            users[index] = { ...user };
+        }
+        fs.writeFileSync('users.json', JSON.stringify(users, null, 2), 'utf8');
+        req.session.user = user;
+        res.redirect('/profile'); 
+    } else {
+        res.redirect('/autorise');
+    }
+});
 app.listen(port, () => {
     console.log(`Сервер запущен, http://localhost:${port}`);
 })

@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "login": "admin@ex.ru",
+    "password": "admin",
+    "date": "01.01.2025",
+    "name": "Админ",
+    "photo": "/uploads/1746031806215.png"
+  },
+  {
+    "id": 2,
+    "login": "user@ex.ru",
+    "password": "user",
+    "date": "02.02.2025",
+    "name": "Пользователь",
+    "photo": ""
+  }
+]
