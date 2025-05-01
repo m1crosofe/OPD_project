@@ -5,7 +5,8 @@
     "password": "admin",
     "date": "01.01.2025",
     "name": "Админ",
-    "photo": "/uploads/1746031806215.png"
+    "photo": "/uploads/1746031806215.png",
+    "status": "Неактивен"
   },
   {
     "id": 2,
@@ -13,6 +14,14 @@
     "password": "user",
     "date": "02.02.2025",
     "name": "Пользователь",
-    "photo": ""
+    "photo": "",
+    "status": "Неактивен"
+  },
+  {
+    "id": 3,
+    "login": "ad@ex.ru",
+    "password": "admin",
+    "date": "1.5.2025",
+    "status": "Активен"
   }
 ]

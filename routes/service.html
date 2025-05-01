@@ -34,10 +34,33 @@
             fetch('/api/check-auth')
                 .then(res => res.json())
                 .then(data => {
+                    const purchaseButtons = document.querySelectorAll('.btn-purchase');
+
                     if (data.isAuthenticated) {
                         profileBtn.classList.remove('hidden');
+
+                        purchaseButtons.forEach(button => {
+                            button.textContent = 'Приобрести';
+                            button.href = '#';
+                            button.onclick = (e) => {
+                                e.preventDefault();
+                                fetch('/purchase', {
+                                    method: 'POST',
+                                    credentials: 'same-origin'
+                                })
+                            };
+                            button.style.backgroundColor = '#29a396';
+                        });
+
                     } else {
                         logregBtn.classList.remove('hidden');
+
+                        purchaseButtons.forEach(button => {
+                            button.textContent = 'Вход';
+                            button.href = '/autorise';
+                            button.onclick = null;
+                            button.style.backgroundColor = '';
+                        });
                     }
                 })
                 .catch(err => console.error('Ошибка проверки авторизации:', err));
@@ -47,21 +70,21 @@
         <div class="container flex">
             <div class="pricing-card">
                 <h2>Базовый план</h2>
-                <p class="price">$29/month</p>
+                <p class="price">3000/месяц</p>
                 <p>Доступ в зал</p>
-                <a href="/autorise" class="btn">Вход</a>
+                <a href="/autorise" class="btn btn-purchase">Вход</a>
             </div>
             <div class="pricing-card">
                 <h2>Premium Plan</h2>
-                <p class="price">$49/month</p>
+                <p class="price">5000/месяц</p>
                 <p>Доступ в зал + групповые занятия</p>
-                <a href="/autorise" class="btn">Вход</a>
+                <a href="/autorise" class="btn btn-purchase">Вход</a>
             </div>
             <div class="pricing-card">
                 <h2>Семейный план</h2>
-                <p class="price">$79/month</p>
+                <p class="price">8000/месяц</p>
                 <p>Доступ до 5 посетителей</p>
-                <a href="/autorise" class="btn">Вход</a>
+                <a href="/autorise" class="btn  btn-purchase">Вход</a>
             </div>
         </div>
         <div style="display: flex; justify-content: center">

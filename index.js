@@ -58,7 +58,7 @@ app.post('/registration', (req, res) => {
             var month = today.getMonth() + 1
             var year = today.getFullYear().toString()
             var date = day + '.' + month + '.' + year
-            const newUser = { id, login: email, password, date };
+            const newUser = { id, login: email, password, date,  status: 'Неактивен' };
 
             users.push(newUser);
             req.session.user = newUser;
@@ -119,6 +119,23 @@ app.post('/update-profile', upload.single('photo'), (req, res) => {
         res.redirect('/autorise');
     }
 });
+
+app.post('/purchase', (req, res) => {
+    const user = req.session.user;
+    if (user) {
+        user.status = 'Активен';
+        const index = users.findIndex(u => u.id === user.id);
+        if (index !== -1) {
+            users[index] = { ...user };
+        }
+        fs.writeFileSync('users.json', JSON.stringify(users, null, 2), 'utf8');
+        req.session.user = user;
+        res.redirect('/profile');
+    } else {
+        res.redirect('/');
+    }
+});
+
 app.post('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {

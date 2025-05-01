@@ -271,7 +271,7 @@
                         <p><strong>Дата регистрации:</strong>
                             <%= user.date %>
                         </p>
-                        <p><strong>Статус членства:</strong> Active</p>
+                        <p><strong>Статус членства:</strong> <%= user.status || "Неактивен" %></p>
                     </div>
                     <button type="button" id="edit-button" class="btn mt" onclick="toggleEdit()">Редактировать
                         профиль</button>
