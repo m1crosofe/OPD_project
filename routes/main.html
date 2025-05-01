@@ -12,27 +12,38 @@
 </head>
 
 <body>
-    <div class="menu">
-        <div class="container flex">
-            <div class="mobile-btn">
-                <ion-icon name="grid"></ion-icon>
-            </div>
-            <div class="logo">
-                <img src="/static/logo.png" alt="no logo" />
-            </div>
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+                checkAuthAndToggleButtons();
+            })
+            .catch(err => {
+                console.error('Ошибка загрузки header:', err);
+            });
 
-            <ul class="nav">
-                <li class="nav-item"><a href="#">Главная</a></li>
-                <li class="nav-item"><a href="#why-us">Особенности</a></li>
-                <li class="nav-item"><a href="#explore">О нас</a></li>
-                <li class="nav-item"><a href="#discount">Регистрация</a></li>
-                <li class="nav-item"><a href="/service">Услуги</a></li>
-            </ul>
+        function checkAuthAndToggleButtons() {
+            const profileBtn = document.getElementById('profile-btn');
+            const loginBtn = document.getElementById('login-btn');
+            const regBtn = document.getElementById('reg-btn');
+            const logregBtn = document.getElementById('login-reg-btn');
 
-            <a href="/autorise" class="btn">Регистрация/Авторизация</a>
-        </div>
-    </div>
+            [profileBtn, loginBtn, regBtn, logregBtn].forEach(btn => btn.classList.add('hidden'));
 
+            fetch('/api/check-auth')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        profileBtn.classList.remove('hidden');
+                    } else {
+                        logregBtn.classList.remove('hidden');
+                    }
+                })
+                .catch(err => console.error('Ошибка проверки авторизации:', err));
+        }
+    </script>
     <header class="header">
         <div class="container flex">
             <div class="text">
@@ -103,7 +114,8 @@
 
                 </h2>
                 <p class="tertiary mb">
-                    Максимальная польза и радость от спорта: выбирайте только здоровые и эффективные направления с учетом принципа адекватности и постепенности нагрузки.
+                    Максимальная польза и радость от спорта: выбирайте только здоровые и эффективные направления с
+                    учетом принципа адекватности и постепенности нагрузки.
                 </p>
 
                 <a href="/service" class="btn mt">Начни сейчас!</a>
@@ -199,8 +211,10 @@
                 </h2>
 
                 <p class="tertiary mb">
-                    Мы приглашаем вас на уникальный опыт, где забота о питании и тренировках будет основана на прогрессивных методах.
-                    Докажем вам, что здоровый образ жизни - это исключительно возможности, раскрывающие новые горизонты, а не ограничения!
+                    Мы приглашаем вас на уникальный опыт, где забота о питании и тренировках будет основана на
+                    прогрессивных методах.
+                    Докажем вам, что здоровый образ жизни - это исключительно возможности, раскрывающие новые горизонты,
+                    а не ограничения!
                 </p>
 
                 <a href="/service" class="btn bt">Начать сейчас!</a>
@@ -242,6 +256,10 @@
         scroll-behavior: smooth;
     }
 
+    .hidden {
+        display: none !important;
+    }
+
     body {
         width: 100%;
         min-height: 100vh;
@@ -249,6 +267,7 @@
         color: #fff;
         overflow-x: hidden;
     }
+
     .container {
         width: 80%;
         margin: 0 auto;

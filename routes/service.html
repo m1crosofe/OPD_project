@@ -11,21 +11,38 @@
 </head>
 
 <body>
-    <div class="menu">
-        <div class="container flex">
-            <div class="logo">
-                <a href="/"><img src="/static/logo.png" alt="no logo" /></a>
-            </div>
-            <ul class="nav">
-                <li class="nav-item"><a href="/">Главная</a></li>
-                <li class="nav-item"><a href="/#why-us">Особенности</a></li>
-                <li class="nav-item"><a href="/#explore">О нас</a></li>
-            </ul>
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+                checkAuthAndToggleButtons();
+            })
+            .catch(err => {
+                console.error('Ошибка загрузки header:', err);
+            });
 
-            <a href="/registration" class="btn">Регистрация</a>
-        </div>
-    </div>
+        function checkAuthAndToggleButtons() {
+            const profileBtn = document.getElementById('profile-btn');
+            const loginBtn = document.getElementById('login-btn');
+            const regBtn = document.getElementById('reg-btn');
+            const logregBtn = document.getElementById('login-reg-btn');
 
+            [profileBtn, loginBtn, regBtn, logregBtn].forEach(btn => btn.classList.add('hidden'));
+
+            fetch('/api/check-auth')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        profileBtn.classList.remove('hidden');
+                    } else {
+                        logregBtn.classList.remove('hidden');
+                    }
+                })
+                .catch(err => console.error('Ошибка проверки авторизации:', err));
+        }
+    </script>
     <div class="pricing-section">
         <div class="container flex">
             <div class="pricing-card">
@@ -110,6 +127,11 @@
         color: #fff;
         overflow-x: hidden;
     }
+
+    .hidden {
+        display: none !important;
+    }
+
     .menu {
         width: 100%;
         background: linear-gradient(to right, #0e0e0e 70%, #142d2a);
@@ -124,6 +146,7 @@
         justify-content: center;
         align-items: center;
     }
+
     .menu .container {
         justify-content: space-between;
     }
@@ -178,7 +201,7 @@
         transition: 0.3s linear;
     }
 
-    
+
     .container {
         width: 90%;
         max-width: 1200px;
@@ -249,8 +272,8 @@
         width: 60%;
         border-collapse: collapse;
         margin-top: 40px;
-        
-        
+
+
     }
 
     .comparison-table th,

@@ -10,7 +10,7 @@ const options = {
 }
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public/uploads/'); 
+        cb(null, 'public/uploads/');
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -52,17 +52,17 @@ app.post('/registration', (req, res) => {
             req.session.user = existingUser;
             return res.redirect('/profile');
         } else {
-        const id = users.length + 1;
-        var today = new Date();
-        var day = today.getDate().toString()
-        var month = today.getMonth() + 1
-        var year = today.getFullYear().toString()
-        var date = day + '.' + month + '.' + year
-        const newUser = { id, login: email, password, date };
+            const id = users.length + 1;
+            var today = new Date();
+            var day = today.getDate().toString()
+            var month = today.getMonth() + 1
+            var year = today.getFullYear().toString()
+            var date = day + '.' + month + '.' + year
+            const newUser = { id, login: email, password, date };
 
-        users.push(newUser);
-        req.session.user = newUser;
-        return res.redirect('/profile')
+            users.push(newUser);
+            req.session.user = newUser;
+            return res.redirect('/profile')
         }
     }
     catch (e) {
@@ -74,13 +74,13 @@ app.post('/registration', (req, res) => {
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
 
-    const user = users.find(u => u.login === email && u.password === password); 
+    const user = users.find(u => u.login === email && u.password === password);
 
     if (user) {
         req.session.user = user;
-        return res.redirect('/profile'); 
+        return res.redirect('/profile');
     } else {
-        return res.status(401).send('Неверный email или пароль'); 
+        return res.status(401).send('Неверный email или пароль');
     }
 });
 
@@ -95,12 +95,15 @@ app.get('/profile', (req, res) => {
     res.render('profile', { user });
     console.log(users);
 })
-app.post('/update-profile', upload.single('photo'), (req, res) =>{
-    const { email, name } = req.body; 
-    const user = req.session.user; 
+app.get('/api/check-auth', (req, res) => {
+    res.json({ isAuthenticated: !!req.session.user });
+});
+app.post('/update-profile', upload.single('photo'), (req, res) => {
+    const { email, name } = req.body;
+    const user = req.session.user;
 
     if (user) {
-        user.login = email; 
+        user.login = email;
         user.name = name;
         if (req.file) {
             user.photo = '/uploads/' + req.file.filename;
@@ -111,10 +114,20 @@ app.post('/update-profile', upload.single('photo'), (req, res) =>{
         }
         fs.writeFileSync('users.json', JSON.stringify(users, null, 2), 'utf8');
         req.session.user = user;
-        res.redirect('/profile'); 
+        res.redirect('/profile');
     } else {
         res.redirect('/autorise');
     }
+});
+app.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error('Ошибка при выходе из сессии:', err);
+            return res.status(500).send('Ошибка выхода');
+        }
+        res.clearCookie('connect.sid');
+        res.sendStatus(200);
+    });
 });
 app.listen(port, () => {
     console.log(`Сервер запущен, http://localhost:${port}`);

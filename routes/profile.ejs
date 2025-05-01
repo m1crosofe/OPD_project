@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,80 +9,80 @@
     <link rel="shortcut icon" href="/static/logo.png" type="image/png">
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;500;700&display=swap");
-        
+
         /* Base */
         :root {
             --clr-primary: #29a396;
         }
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        
+
         a {
             text-decoration: none;
             color: black;
         }
-        
+
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             background-color: #f8f9fa;
         }
-        
+
         .container {
             width: 90%;
             max-width: 1200px;
             margin: auto;
         }
-        
+
         .flex {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        
+
         .menu {
             width: 100%;
             background: linear-gradient(to right, #0e0e0e 70%, #142d2a);
             padding: 12px 0;
         }
-        
+
         .menu .container {
             justify-content: space-between;
         }
-        
+
         .logo img {
             width: 120px;
         }
-        
+
         .nav {
             list-style: none;
         }
-        
+
         .nav-item {
             display: inline-block;
             margin-right: 30px;
             font-size: 18px;
             font-weight: 400;
         }
-        
+
         .nav-item a {
             text-decoration: none;
             color: #fff;
         }
-        
+
         .nav-item:hover a {
             color: #29a396;
             transition: 0.3s linear;
         }
-        
+
         .nav-item:last-of-type {
             margin-right: 0;
         }
-        
+
         .btn {
             padding: 10px 28px;
             background: var(--clr-primary);
@@ -92,37 +93,41 @@
             color: #fff;
             display: inline-block;
         }
-        
+
         .btn:hover {
             background: #165f56;
             transition: 0.3s linear;
         }
-        
+
         .header {
             background-color: #e9ecef;
             padding: 50px 0;
             text-align: center;
         }
-        
+
         .header .text h1 {
             font-size: 2.5em;
             margin-bottom: 15px;
         }
-        
+
         .header .text span {
             color: #007bff;
         }
-        
+
+        .hidden {
+            display: none !important;
+        }
+
         .section {
             padding: 40px 0;
         }
-        
+
         .primary {
             color: #007bff;
             font-size: 1.5em;
             margin-bottom: 20px;
         }
-        
+
         .form-container {
             background: #ffffff;
             padding: 20px;
@@ -133,18 +138,18 @@
             margin: auto;
             text-align: center;
         }
-        
+
         .user-info {
             margin-bottom: 15px;
         }
-        
+
         .user-info img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             margin-bottom: 10px;
         }
-        
+
         .btn.mt {
             background-color: #007bff;
             color: #ffffff;
@@ -154,11 +159,20 @@
             cursor: pointer;
             width: 100%;
         }
-        
+
         .tertiary {
             color: #6c757d;
         }
-        
+        .logout{
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+            width: 40%;
+            margin-top: 5px;
+        }
+
         .footer {
             background-color: #343a40;
             color: #ffffff;
@@ -178,21 +192,60 @@
         }
     </script>
 </head>
+
 <body>
-    <div class="menu">
-        <div class="container flex">
-            <div class="logo">
-                <a href="/"><img src="/static/logo.png" alt="no logo" /></a>
-            </div>
-            <ul class="nav">
-                <li class="nav-item"><a href="/">Главная</a></li>
-                <li class="nav-item"><a href="/#why-us">Особенности</a></li>
-                <li class="nav-item"><a href="/#explore">О нас</a></li>
-            </ul>
-            <a href="/registration" class="btn">Регистрация</a>
-        </div>
-    </div>
-    
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+                checkAuthAndToggleButtons();
+            })
+            .catch(err => {
+                console.error('Ошибка загрузки header:', err);
+            });
+
+        function checkAuthAndToggleButtons() {
+            const profileBtn = document.getElementById('profile-btn');
+            const loginBtn = document.getElementById('login-btn');
+            const regBtn = document.getElementById('reg-btn');
+            const logregBtn = document.getElementById('login-reg-btn');
+
+            [profileBtn, loginBtn, regBtn, logregBtn].forEach(btn => btn.classList.add('hidden'));
+
+            fetch('/api/check-auth')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        profileBtn.classList.remove('hidden');
+                    } else {
+                        logregBtn.classList.remove('hidden');
+                    }
+                })
+                .catch(err => console.error('Ошибка проверки авторизации:', err));
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.getElementById('logout-button');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    fetch('/logout', { method: 'POST' })
+                        .then(res => {
+                            if (res.ok) {
+                                window.location.href = '/autorise';
+                            } else {
+                                alert('Ошибка выхода из аккаунта');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Ошибка запроса выхода:', err);
+                            alert('Ошибка выхода из аккаунта');
+                        });
+                });
+            }
+        });
+    </script>
+
     <header class="header">
         <div class="container flex">
             <div class="text">
@@ -201,27 +254,40 @@
             </div>
         </div>
     </header>
-    
+
     <div class="section" id="profile">
         <div class="container flex">
             <div class="form-container">
                 <h2 class="primary mb">Информация о профиле</h2>
-                 <div id="display-info">
+                <div id="display-info">
                     <div class="user-info">
                         <img src="<%= user.photo || 'https://placehold.co/200x200' %>" alt="Profile Picture" />
-                        <p><strong>Имя:</strong> <span id="display-name"><%= user.name || 'Введите ваше имя' %></span></p>
-                        <p><strong>Email:</strong> <span id="display-email"><%= user.login %></span></p>
-                        <p><strong>Дата регистрации:</strong> <%= user.date %></p>
+                        <p><strong>Имя:</strong> <span id="display-name">
+                                <%= user.name || 'Введите ваше имя' %>
+                            </span></p>
+                        <p><strong>Email:</strong> <span id="display-email">
+                                <%= user.login %>
+                            </span></p>
+                        <p><strong>Дата регистрации:</strong>
+                            <%= user.date %>
+                        </p>
                         <p><strong>Статус членства:</strong> Active</p>
                     </div>
-                    <button type="button" id="edit-button" class="btn mt" onclick="toggleEdit()">Редактировать профиль</button>
+                    <button type="button" id="edit-button" class="btn mt" onclick="toggleEdit()">Редактировать
+                        профиль</button>
+                    <button type="button" id="logout-button" class="logout mt" style="background-color: #dc3545;">Выйти из
+                        аккаунта</button>
+
                 </div>
 
-                <form id="edit-profile-form" action="/update-profile" method="POST" enctype="multipart/form-data" style="display: none;">
+                <form id="edit-profile-form" action="/update-profile" method="POST" enctype="multipart/form-data"
+                    style="display: none;">
                     <div class="user-info">
                         <img src="<%= user.photo || 'https://placehold.co/200x200' %>" alt="Profile Picture" />
-                        <p><strong>Имя:</strong> <input type="text" name="name" value="<%= user.name || '' %>" required /></p>
-                        <p><strong>Email:</strong> <input type="email" name="email" value="<%= user.login %>" required /></p>
+                        <p><strong>Имя:</strong> <input type="text" name="name" value="<%= user.name || '' %>"
+                                required /></p>
+                        <p><strong>Email:</strong> <input type="email" name="email" value="<%= user.login %>"
+                                required /></p>
                         <p><strong>Фото профиля:</strong> <input type="file" name="photo" accept="image/*" /></p>
                     </div>
                     <button type="submit" class="btn mt">Сохранить изменения</button>
@@ -229,7 +295,7 @@
             </div>
         </div>
     </div>
-    
+
     <footer class="footer">
         <div class="container flex">
             <p class="tertiary">&copy; 2025 проект СурГУ</p>
@@ -237,4 +303,5 @@
     </footer>
 
 </body>
+
 </html>

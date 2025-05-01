@@ -12,21 +12,38 @@
 </head>
 
 <body>
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+                checkAuthAndToggleButtons();
+            })
+            .catch(err => {
+                console.error('Ошибка загрузки header:', err);
+            });
 
-    <div class="menu">
-        <div class="container flex">
-            <div class="logo">
-                <a href="/"><img src="/static/logo.png" alt="no logo" /></a>
-            </div>
-            <ul class="nav">
-                <li class="nav-item"><a href="/">Главная</a></li>
-                <li class="nav-item"><a href="/#why-us">Особенности</a></li>
-                <li class="nav-item"><a href="/#explore">О нас</a></li>
-            </ul>
-            <a href="/autorise" class="btn">Авторизация</a>
-        </div>
-    </div>
+        function checkAuthAndToggleButtons() {
+            const profileBtn = document.getElementById('profile-btn');
+            const loginBtn = document.getElementById('login-btn');
+            const regBtn = document.getElementById('reg-btn');
+            const logregBtn = document.getElementById('login-reg-btn');
 
+            [profileBtn, loginBtn, regBtn, logregBtn].forEach(btn => btn.classList.add('hidden'));
+
+            fetch('/api/check-auth')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        profileBtn.classList.remove('hidden');
+                    } else {
+                        loginBtn.classList.remove('hidden');
+                    }
+                })
+                .catch(err => console.error('Ошибка проверки авторизации:', err));
+        }
+    </script>
     <header class="header">
         <div class="container flex">
             <div class="text">
@@ -79,7 +96,7 @@
             icon.innerHTML = '&#x1F441;'; // Eye icon closed
         }
     });
-    
+
 </script>
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;500;700&display=swap");
@@ -109,6 +126,10 @@
         width: 90%;
         max-width: 1200px;
         margin: auto;
+    }
+
+    .hidden {
+        display: none !important;
     }
 
     .flex {

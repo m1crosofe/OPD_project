@@ -12,22 +12,38 @@
 </head>
 
 <body>
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+                checkAuthAndToggleButtons();
+            })
+            .catch(err => {
+                console.error('Ошибка загрузки header:', err);
+            });
 
-    <div class="menu">
-        <div class="container flex">
-            <div class="logo">
-                <a href="/"><img src="/static/logo.png" alt="no logo" /></a>
-            </div>
-            <ul class="nav">
-                <li class="nav-item"><a href="/">Главная</a></li>
-                <li class="nav-item"><a href="/#why-us">Особенности</a></li>
-                <li class="nav-item"><a href="/#explore">О нас</a></li>
-            </ul>
+        function checkAuthAndToggleButtons() {
+            const profileBtn = document.getElementById('profile-btn');
+            const loginBtn = document.getElementById('login-btn');
+            const regBtn = document.getElementById('reg-btn');
+            const logregBtn = document.getElementById('login-reg-btn');
 
-            <a href="/registration" class="btn">Регистрация</a>
-        </div>
-    </div>
+            [profileBtn, loginBtn, regBtn, logregBtn].forEach(btn => btn.classList.add('hidden'));
 
+            fetch('/api/check-auth')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.isAuthenticated) {
+                        profileBtn.classList.remove('hidden');
+                    } else {
+                        regBtn.classList.remove('hidden');
+                    }
+                })
+                .catch(err => console.error('Ошибка проверки авторизации:', err));
+        }
+    </script>
     <header class="header">
         <div class="container flex">
             <div class="text">
@@ -52,9 +68,9 @@
                     <div class="form-group">
                         <label for="password">Пароль</label>
                         <div class="password-container">
-                        <input type="password" id="password" name="password" placeholder="Пароль123" required />
-                        <span class="password-toggle" id="password-toggle">&#x1F441;</span>
-                    </div>
+                            <input type="password" id="password" name="password" placeholder="Пароль123" required />
+                            <span class="password-toggle" id="password-toggle">&#x1F441;</span>
+                        </div>
                     </div>
                     <button type="submit" class="btn mt">Войти</button>
                 </form>
@@ -133,6 +149,9 @@
         justify-content: space-between;
     }
 
+    .hidden {
+        display: none !important;
+    }
 
     .logo img {
         width: 120px;
@@ -234,6 +253,7 @@
         border: 1px solid #ced4da;
         border-radius: 5px;
     }
+
     .password-container {
         position: relative;
     }
@@ -244,6 +264,7 @@
         border: 1px solid #ced4da;
         border-radius: 5px;
     }
+
     .password-toggle {
         position: absolute;
         right: 10px;
@@ -253,6 +274,7 @@
         background-size: contain;
 
     }
+
     .btn.mt {
         background-color: #007bff;
         color: #ffffff;
