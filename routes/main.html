@@ -163,7 +163,51 @@
             </div>
         </div>
     </div>
-
+    <div class="section" id="equipment">
+        <h2 class="primary">Наши тренажеры</h2>
+        <div class="equipment-slider">
+            <div class="equipment-item">
+                <img src="https://avatars.mds.yandex.net/i?id=8535651cb94a82818d8274ad4b67fa08_l-5368517-images-thumbs&n=13" alt="Тренажер 1">
+                <h3>Беговая дорожка</h3>
+            </div>
+            <div class="equipment-item">
+                <img src="https://krasunia.ru/wp-content/uploads/3/a/b/3aba8c6456923f9616e8b4ef2f75f968.jpeg" alt="Тренажер 2">
+                <h3>Силовой тренажер</h3>
+            </div>
+            <div class="equipment-item">
+                <img src="https://avatars.mds.yandex.net/get-altay/1489947/2a00000167a6d26f4ef67e76cb3d1b7419e3/XXXL" alt="Тренажер 3">
+                <h3>Велотренажер</h3>
+            </div>
+            <div class="equipment-item">
+                <img src="https://cdn1.ozone.ru/s3/multimedia-1-u/7201457814.jpg" alt="Тренажер 4">
+                <h3>Эллиптический тренажер</h3>
+            </div>
+            <div class="equipment-item">
+                <img src="https://avatars.mds.yandex.net/i?id=972baf19aff310cc1d8872b9a1316aa6-4077366-images-thumbs&n=13" alt="Тренажер 5">
+                <h3>Гребной тренажер</h3>
+            </div>
+            <div class="equipment-item">
+                <img src="https://the-challenger.ru/wp-content/uploads/2016/01/IMG_4197-800x572.jpg" alt="Тренажер 6">
+                <h3>Тренажер Смита</h3>
+            </div>
+            <div class="equipment-item">
+                <img src="https://www.domsporta.com/upload/iblock/108/5e6b58bc-5c5e-11e1-afe4-00155d000a00_84ce75fd-f54b-11e7-8142-00155d00f103.jpeg" alt="Тренажер 7">
+                <h3>Турник-брусья</h3>
+            </div>
+            <div class="equipment-item">
+                <img src="https://avatars.mds.yandex.net/i?id=95d762f1636ef78b4bb473135ba3f106_l-5354695-images-thumbs&n=13" alt="Тренажер 8">
+                <h3>Скамья для жима</h3>
+            </div>
+            <div class="equipment-item">
+                <img src="https://avatars.mds.yandex.net/get-altay/1363018/2a00000165004deb314e730ff3c24f5f9d55/XXL" alt="Тренажер 9">
+                <h3>Гантельный ряд</h3>
+            </div>
+            <div class="equipment-item">
+                <img src="https://www1.lovethatdesign.com/wp-content/uploads/2020/12/FeaturedImage_CABLE-STATIONS-5_00.jpg" alt="Тренажер 10">
+                <h3>Кроссовер</h3>
+            </div>
+        </div>
+    </div>
 
 
     <div class="section" id="testimonial">
@@ -321,6 +365,64 @@
         background: #1d1f1e;
         position: relative;
         padding: 80px 0;
+    }
+
+    #equipment {
+        overflow: hidden;
+        padding: 40px 0;
+        background: #141615;
+        position: relative;
+    }
+
+
+    #equipment h2 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 30px;
+    }
+
+
+    .equipment-slider {
+        display: flex;
+        animation: slide 30s linear infinite;
+        white-space: nowrap;
+    }
+
+
+    .equipment-item {
+        flex: none;
+        width: 300px;
+        margin: 0 15px;
+        padding: 20px;
+        background: #1d1f1e;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+    .equipment-item img {
+        max-width: 100%;
+        height: 85%;
+        margin-bottom: 10px;
+        border-radius: 8px;
+    }
+
+
+    .equipment-item h3 {
+        color: #fff;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    @keyframes slide {
+        0% {
+            transform: translateX(0);
+        }
+
+
+        100% {
+            transform: translateX(-100%);
+        }
     }
 
     .section::after {

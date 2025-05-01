@@ -47,8 +47,15 @@
                                 fetch('/purchase', {
                                     method: 'POST',
                                     credentials: 'same-origin'
-                                })
+                                }).then(res => {
+                                    if (res.redirected) {
+                                        window.location.href = res.url;
+                                    }
+                                }).catch(err => {
+                                    console.error('Ошибка при покупке:', err);
+                                });
                             };
+
                             button.style.backgroundColor = '#29a396';
                         });
 
